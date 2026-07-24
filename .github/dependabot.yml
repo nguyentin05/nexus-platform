@@ -3,8 +3,8 @@ registries:
   private-submodules:
     type: git
     url: https://github.com
-    token: ${{ secrets.NEXUS_CICD_BOT_TOKEN }}
-
+    username: x-access-token
+    password: ${{ secrets.NEXUS_CICD_BOT_TOKEN }}
 updates:
   - package-ecosystem: "gitsubmodule"
     directory: "/"
@@ -17,4 +17,5 @@ updates:
       include: "scope"
     labels:
       - "automerge"
-    registries: "*"
+    registries:
+      - private-submodules
