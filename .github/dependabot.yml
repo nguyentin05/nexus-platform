@@ -1,0 +1,67 @@
+version: 2
+registries:
+  private-submodules:
+    type: git
+    url: https://github.com
+    token: ${{ secrets.NEXUS_CICD_BOT_TOKEN }}
+
+updates:
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "08:00"
+      timezone: "Asia/Ho_Chi_Minh"
+    allow:
+      - dependency-name: "nexus-app"
+    commit-message:
+      prefix: "chore(app)"
+      include: "scope"
+    labels:
+      - "automerge"
+    registries: "*"
+
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "08:00"
+      timezone: "Asia/Ho_Chi_Minh"
+    allow:
+      - dependency-name: "nexus-gitops"
+    commit-message:
+      prefix: "chore(gitops)"
+      include: "scope"
+    labels:
+      - "automerge"
+    registries: "*"
+
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "08:00"
+      timezone: "Asia/Ho_Chi_Minh"
+    allow:
+      - dependency-name: "nexus-infra"
+    commit-message:
+      prefix: "chore(infra)"
+      include: "scope"
+    labels:
+      - "automerge"
+    registries: "*"
+
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "08:00"
+      timezone: "Asia/Ho_Chi_Minh"
+    allow:
+      - dependency-name: "nexus-monitoring-agent"
+    commit-message:
+      prefix: "chore(monitoring-agent)"
+      include: "scope"
+    labels:
+      - "automerge"
+    registries: "*"

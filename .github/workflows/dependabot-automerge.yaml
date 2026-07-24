@@ -1,0 +1,23 @@
+name: Dependabot auto-merge
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  enable-auto-merge:
+    name: Enable Dependabot auto-merge
+    if: >-
+      github.event.pull_request.user.login == 'dependabot[bot]' &&
+      github.repository == 'nguyentin05/nexus-platform'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Enable auto-merge for Dependabot PR
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.NEXUS_CICD_BOT_TOKEN }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: gh pr merge --auto --squash --subject "$PR_TITLE" --body "Automated patch dependency update." "$PR_URL"
