@@ -1,0 +1,12 @@
+[submodule "nexus-app"]
+	path = nexus-app
+	url = https://github.com/nguyentin05/nexus-app
+[submodule "nexus-gitops"]
+	path = nexus-gitops
+	url = https://github.com/nguyentin05/nexus-gitops
+[submodule "nexus-infra"]
+	path = nexus-infra
+	url = https://github.com/nguyentin05/nexus-infra
+[submodule "nexus-monitoring-agent"]
+	path = nexus-monitoring-agent
+	url = https://github.com/nguyentin05/nexus-monitoring-agent
