@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 jobs:
-  enable-auto-merge:
-    name: Enable Dependabot auto-merge
+  auto-merge:
+    name: Dependabot auto-merge
     if: >-
       github.event.pull_request.user.login == 'dependabot[bot]' &&
       github.repository == 'nguyentin05/nexus-platform'
@@ -17,7 +17,18 @@ jobs:
     steps:
       - name: Enable auto-merge for Dependabot PR
         env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.NEXUS_CICD_BOT_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
           PR_TITLE: ${{ github.event.pull_request.title }}
-        run: gh pr merge --auto --squash --subject "$PR_TITLE" --body "Automated patch dependency update." "$PR_URL"
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          SUBMODULE_FULL=$(echo "$PR_TITLE" | grep -oP 'Bump \K[^ ]+(?= from)')
+          if [ -z "$SUBMODULE_FULL" ]; then
+            echo "Cannot parse submodule from title, keeping original title"
+            SUBJECT="$PR_TITLE"
+          else
+            SUBMODULE_SHORT="${SUBMODULE_FULL#nexus-}"
+            DESCRIPTION="${PR_TITLE#chore(deps): }"
+            SUBJECT="update(${SUBMODULE_SHORT}): ${DESCRIPTION}"
+          fi
+           gh pr merge --auto --squash --subject "$SUBJECT" --body "Automated patch dependency update." "$PR_URL"
