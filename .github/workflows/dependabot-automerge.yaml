@@ -22,7 +22,7 @@ jobs:
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          SUBMODULE_FULL=$(echo "$PR_TITLE" | grep -oP 'Bump \K[^ ]+(?= from)')
+          SUBMODULE_FULL=$(echo "$PR_TITLE" | grep -oP 'bump \K[^ ]+(?= from)')
           if [ -z "$SUBMODULE_FULL" ]; then
             echo "Cannot parse submodule from title, keeping original title"
             SUBJECT="$PR_TITLE"
